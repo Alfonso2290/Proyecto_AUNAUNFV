@@ -71,6 +71,23 @@ public class EmpleadoDAO {
         
     }
     
+    public int registrarEmpleados(EmpleadoBEAN empleado){
+        
+        int i=0;
+        try{
+            conexion=new ConexionBD();
+            sql="INSERT INTO EMPLEADO VALUES(?,?,?)";
+            instruccion=conexion.getConexionBD().prepareStatement(sql);
+            instruccion.setString(1, empleado.getCodigoEmpleado());
+            instruccion.setString(2, empleado.getDni());
+            instruccion.setString(3, empleado.getCargo());
+            i=instruccion.executeUpdate();
+            
+        }catch(Exception e){}
+        
+        return i;
+    }
+    
     public int verificarEmpleado(EmpleadoBEAN emp)
     {
         int i=0;

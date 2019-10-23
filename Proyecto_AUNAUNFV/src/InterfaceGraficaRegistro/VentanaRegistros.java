@@ -9,13 +9,13 @@ import java.awt.*;
 public class VentanaRegistros extends JFrame{
     
     private JPanel lamina;
-    private JLabel cliente,producto,venta,cli,pro ,ven,titulo;
+    private JLabel cliente,producto,venta,cli,pro ,ven,titulo,empleado,emp;
     private JButton btnAtras;
     
     public VentanaRegistros(){
         
         setTitle("Selección de registro");
-        setSize(500,320);
+        setSize(630,320);
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -33,7 +33,7 @@ public class VentanaRegistros extends JFrame{
         Font fuenteTitulo=new Font("Decker", Font.BOLD, 20);
         
         titulo=new JLabel("SELECCIÓN DE REGISTRO");
-        titulo.setBounds(120,20,300,30);
+        titulo.setBounds(195,20,300,30);
         titulo.setFont(fuenteTitulo);
         titulo.setForeground(ColorFuente);
         
@@ -67,6 +67,16 @@ public class VentanaRegistros extends JFrame{
         ven.setFont(fuenteCamposLabel);
         ven.addMouseListener(new eventoMouse());
         
+        empleado=new JLabel(new ImageIcon("src/imagenes/empleado.png"));
+        empleado.setBounds(475,70,100,150);
+        empleado.addMouseListener(new eventoMouse());
+        
+        emp=new JLabel("EMPLEADO");
+        emp.setBounds(480,160,100,150);
+        emp.setForeground(ColorFuente);
+        emp.setFont(fuenteCamposLabel);
+        emp.addMouseListener(new eventoMouse());
+        
         btnAtras=new JButton(new ImageIcon("src/imagenes/atras.png"));
         btnAtras.setBounds(10,260,30,20);
         btnAtras.addMouseListener(new ColorBotones(ColorFuente,Color.WHITE,btnAtras));
@@ -90,6 +100,8 @@ public class VentanaRegistros extends JFrame{
         lamina.add(venta);
         lamina.add(ven);
         lamina.add(btnAtras);
+        lamina.add(empleado);
+        lamina.add(emp);
         
         add(lamina);
     }
@@ -120,6 +132,15 @@ public class VentanaRegistros extends JFrame{
                 VentanaRegistroVentas ventana=new VentanaRegistroVentas();
                 ventana.setVisible(true);
                 ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }
+            
+            if(e.getSource()==empleado || e.getSource()==emp){
+                
+                dispose();
+                VentanaRegistroEmpleado ventana=new VentanaRegistroEmpleado();
+                ventana.setVisible(true);
+                ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
             }
             
         }

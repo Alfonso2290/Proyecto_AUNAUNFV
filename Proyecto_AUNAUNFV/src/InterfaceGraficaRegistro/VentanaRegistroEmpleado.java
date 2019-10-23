@@ -1,21 +1,30 @@
 
 package InterfaceGraficaRegistro;
 
-import java.awt.event.*;
-import javax.swing.*;
-import BEAN.*;
-import DAO.*;
-import Principal.VentanaPrincipal;
+import BEAN.ClienteBEAN;
+import BEAN.EmpleadoBEAN;
+import BEAN.PersonaBEAN;
+import DAO.ClienteDAO;
+import DAO.EmpleadoDAO;
+import DAO.PersonaDAO;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
-public class VentanaRegistroUsuarioInicio extends JFrame implements ActionListener,FocusListener
+public class VentanaRegistroEmpleado extends JFrame implements ActionListener,FocusListener
 {
-    private PanelRegistroUsuarioInicio miPanel;
+    private PanelRegistroEmpleado miPanel;
     
-    public VentanaRegistroUsuarioInicio()
+    public VentanaRegistroEmpleado()
     {
-        setTitle("Registrar Usuario");
-        setSize(350,700);
+        setTitle("Registrar Empleado");
+        setSize(350,530);
         setResizable(false);
         setLocationRelativeTo(null);
         Inicio();
@@ -23,12 +32,11 @@ public class VentanaRegistroUsuarioInicio extends JFrame implements ActionListen
     
     private void Inicio()
     {
-        miPanel=new PanelRegistroUsuarioInicio();
+        miPanel=new PanelRegistroEmpleado();
         miPanel.setBackground(Color.LIGHT_GRAY.brighter());
         
         miPanel.getBtnGuardar().addActionListener(this);
         miPanel.getBtnCancelar().addActionListener(this);
-        miPanel.getTxtUsuario().addFocusListener(this);
         miPanel.getTxtDni().addFocusListener(this);
         
         miPanel.getBtnCancelar().addKeyListener(new cambioCampo());
@@ -39,14 +47,12 @@ public class VentanaRegistroUsuarioInicio extends JFrame implements ActionListen
         miPanel.getTxtNom().addKeyListener(new cambioCampo());
         miPanel.getTxtDni().addKeyListener(new cambioCampo());
         miPanel.getTxtCargo().addKeyListener(new cambioCampo());
-        miPanel.getTxtClave1().addKeyListener(new cambioCampo());
-        miPanel.getTxtClave2().addKeyListener(new cambioCampo());
-        miPanel.getTxtUsuario().addKeyListener(new cambioCampo());
+        
         
         miPanel.getBtnAtras().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 dispose();
-                VentanaPrincipal ventana=new VentanaPrincipal();
+                VentanaRegistros ventana=new VentanaRegistros();
                 ventana.setVisible(true);
                 ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
@@ -71,16 +77,14 @@ public class VentanaRegistroUsuarioInicio extends JFrame implements ActionListen
     
     private void eventoGuardar()
     {
-        String nom,dni,cel,fecha,email,cargo,usuario,clave1,clave2;
+        String nom,dni,cel,fecha,email,cargo,codigoEmpleado;
         dni=miPanel.getTxtDni().getText();
         nom=miPanel.getTxtNom().getText();
         fecha=miPanel.getTxtFecha().getText();
         cel=miPanel.getTxtCel().getText();
         email=miPanel.getTxtEmail().getText();
         cargo=miPanel.getTxtCargo().getText();
-        usuario=miPanel.getTxtUsuario().getText();
-        clave1=miPanel.getTxtClave1().getText();
-        clave2=miPanel.getTxtClave2().getText();
+        
 
         if(dni.equals("") || dni.length()<8)
         {
@@ -91,21 +95,6 @@ public class VentanaRegistroUsuarioInicio extends JFrame implements ActionListen
         {
             JOptionPane.showMessageDialog(null, "Ustede debe llenar el campo Nombre");
             miPanel.getTxtNom().requestFocus();
-        }
-        else if(usuario.equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Ustede debe llenar el campo Usuario");
-            miPanel.getTxtUsuario().requestFocus();
-        }
-        else if(clave1.equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Ustede debe llenar el campo Contraseña");
-            miPanel.getTxtClave1().requestFocus();
-        }
-        else if(clave2.equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Ustede debe llenar el campo Repetir Contraseña");
-            miPanel.getTxtClave2().requestFocus();
         }
         else if(cargo.equals(""))
         {
@@ -127,64 +116,37 @@ public class VentanaRegistroUsuarioInicio extends JFrame implements ActionListen
             JOptionPane.showMessageDialog(null, "Ustede debe llenar el campo Email");
             miPanel.getTxtEmail().requestFocus();
         }
-        else if(!(clave1.equals(clave2))){
-            
-            JOptionPane.showMessageDialog(null, "Las contraseñas ingresadas no coinciden");
-            miPanel.getTxtClave1().setText("");
-            miPanel.getTxtClave2().setText("");
-            miPanel.getTxtClave1().requestFocus();
-        }
         else
         {
-
-                PersonaBEAN persona=new PersonaBEAN();
-                persona.setDni(dni);
-                persona.setNombre(nom);
-                persona.setFechaNacimiento(fecha);
-                persona.setCelular(cel);
-                persona.setEmail(email);
-                
-                EmpleadoDAO dao=new EmpleadoDAO();
-                String codigoEmpleado=dao.generarCodigoEmpleado();
-                EmpleadoBEAN empleado=new EmpleadoBEAN();
-                empleado.setDni(dni);
-                empleado.setCargo(cargo);
-                empleado.setCodigoEmpleado(codigoEmpleado);
-
-                UsuarioBEAN usu=new UsuarioBEAN();
-                usu.setDni(dni);
-                usu.setNombre(usuario);
-                usu.setClave(clave1);
-                usu.setTipo("Administrador");
-                
-                PersonaDAO perdao=new PersonaDAO();
-                
-                UsuarioDAO usudao=new UsuarioDAO();
-        
-                int verificarNombreUsuario=usudao.verificarNombreUsuario(usuario);
-                int verificarDNI=dao.verificarEmpleado(empleado);
-                
-                
-                if(verificarNombreUsuario==0)
-                {
-                    if(verificarDNI==0)
-                    {
-                        perdao.registrarPersona(persona);
-                        usudao.registrarUsuario(usu);
-                        dao.registrarEmpleado(empleado);
-                        miPanel.limpiarCampos();
-                    }else{
-                        
-                        JOptionPane.showMessageDialog(null, "Error!!..Verifique los datos ingresados");
-                        miPanel.getTxtDni().requestFocus();
-                    }
-                    
-                }else{
-                    
-                    JOptionPane.showMessageDialog(null, "Error!!..Verifique los datos ingresados");
-                    miPanel.getTxtDni().requestFocus();
-                }
+            EmpleadoDAO empdao=new EmpleadoDAO();
+            codigoEmpleado=empdao.generarCodigoEmpleado();
             
+            PersonaBEAN persona=new PersonaBEAN();
+            persona.setDni(dni);
+            persona.setNombre(nom);
+            persona.setFechaNacimiento(fecha);
+            persona.setCelular(cel);
+            persona.setEmail(email);
+            
+            EmpleadoBEAN empleado=new EmpleadoBEAN();
+            empleado.setDni(dni);
+            empleado.setCargo(cargo);
+            empleado.setCodigoEmpleado(codigoEmpleado);
+            
+            PersonaDAO perdao=new PersonaDAO();
+
+            int verificarDNI=empdao.verificarEmpleado(empleado);
+            if(verificarDNI==0)
+            {
+                perdao.registrarPersona(persona);
+                empdao.registrarEmpleado(empleado);
+                JOptionPane.showMessageDialog(null,"El empleado ha sido registrado correctamente");
+                miPanel.limpiarCampos();
+            }else{
+                JOptionPane.showMessageDialog(null, "Error!!..Verifique los datos ingresados");
+                miPanel.getTxtDni().requestFocus();
+                
+            }
             
         }
     }
@@ -193,13 +155,7 @@ public class VentanaRegistroUsuarioInicio extends JFrame implements ActionListen
     @Override
     public void focusGained(FocusEvent e)
     {
-        if(e.getSource()==miPanel.getTxtDni()){
-            miPanel.getMensaje().setText("");
-        }
-        
-        if(e.getSource()==miPanel.getTxtUsuario()){
-            miPanel.getMensaje2().setText("");
-        }
+        miPanel.getMensaje().setText("");
     }
     
     @Override
@@ -208,28 +164,14 @@ public class VentanaRegistroUsuarioInicio extends JFrame implements ActionListen
         if(e.getSource()==miPanel.getTxtDni())
         {
             String dni=miPanel.getTxtDni().getText();
-            EmpleadoBEAN emp=new EmpleadoBEAN();
-            emp.setDni(dni);
+            EmpleadoBEAN empleado=new EmpleadoBEAN();
+            empleado.setDni(dni);
             
             EmpleadoDAO dao=new EmpleadoDAO();
-            int verificacion=dao.verificarEmpleado(emp);
+            int verificacion=dao.verificarEmpleado(empleado);
             if(verificacion>0 && dni.compareTo("")!=0 )
             {
-                miPanel.getMensaje().setText("DNI Registrado");
-            }
-        }
-        
-        if(e.getSource()==miPanel.getTxtUsuario())
-        {
-            String nombreUsuario=miPanel.getTxtUsuario().getText();
-            UsuarioBEAN usu=new UsuarioBEAN();
-            usu.setNombre(nombreUsuario);
-            
-            UsuarioDAO dao=new UsuarioDAO();
-            int verificacion=dao.verificarNombreUsuario(nombreUsuario);
-            if(verificacion>0 && nombreUsuario.compareTo("")!=0 )
-            {
-                miPanel.getMensaje2().setText("Usuario Registrado");
+                miPanel.getMensaje().setText("Empleado Registrado");
             }
         }
     }
@@ -240,7 +182,7 @@ public class VentanaRegistroUsuarioInicio extends JFrame implements ActionListen
         if(rpta==JOptionPane.YES_OPTION)
         {
             dispose();
-            VentanaPrincipal ventana=new VentanaPrincipal();
+            VentanaRegistros ventana=new VentanaRegistros();
             ventana.setVisible(true);
             ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
@@ -261,24 +203,6 @@ public class VentanaRegistroUsuarioInicio extends JFrame implements ActionListen
             {
                 if(e.VK_ENTER==e.getKeyCode())
                     miPanel.getTxtNom().nextFocus();
-            }
-            
-            if(e.getSource()==miPanel.getTxtUsuario())
-            {
-                if(e.VK_ENTER==e.getKeyCode())
-                    miPanel.getTxtUsuario().nextFocus();
-            }
-            
-            if(e.getSource()==miPanel.getTxtClave1())
-            {
-                if(e.VK_ENTER==e.getKeyCode())
-                    miPanel.getTxtClave1().nextFocus();
-            }
-            
-            if(e.getSource()==miPanel.getTxtClave2())
-            {
-                if(e.VK_ENTER==e.getKeyCode())
-                    miPanel.getTxtClave2().nextFocus();
             }
             
             if(e.getSource()==miPanel.getTxtCargo())
@@ -320,4 +244,3 @@ public class VentanaRegistroUsuarioInicio extends JFrame implements ActionListen
         }
     }
 }
-
