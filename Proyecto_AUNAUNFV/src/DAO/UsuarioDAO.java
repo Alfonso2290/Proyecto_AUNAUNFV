@@ -102,4 +102,50 @@ public class UsuarioDAO {
         return i;
         
     }
+    
+    public int verificarUsuario(UsuarioBEAN usu)
+    {
+        int i=0;
+        try 
+        {
+            conexion=new ConexionBD();
+            sql="SELECT COUNT(*) ";
+            sql+="FROM USUARIO  ";
+            sql+="WHERE DNI=?";
+            instruccion=conexion.getConexionBD().prepareStatement(sql);
+            instruccion.setString(1, usu.getDni());
+            tabla=instruccion.executeQuery();
+            
+            if(tabla.next())
+                i=tabla.getInt(1);
+            
+        } 
+        catch (Exception e) {
+        }
+        
+        return i;
+    }
+    
+    public int verificarDNIUsuario(UsuarioBEAN usu)
+    {
+        int i=0;
+        try 
+        {
+            conexion=new ConexionBD();
+            sql="SELECT COUNT(*) ";
+            sql+="FROM PERSONA  ";
+            sql+="WHERE DNI=?";
+            instruccion=conexion.getConexionBD().prepareStatement(sql);
+            instruccion.setString(1, usu.getDni());
+            tabla=instruccion.executeQuery();
+            
+            if(tabla.next())
+                i=tabla.getInt(1);
+            
+        } 
+        catch (Exception e) {
+        }
+        
+        return i;
+    }
 }
