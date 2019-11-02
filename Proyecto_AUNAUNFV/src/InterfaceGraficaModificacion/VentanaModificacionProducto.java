@@ -19,7 +19,7 @@ public class VentanaModificacionProducto extends JFrame implements ActionListene
     {
         this.paramProducto=paramProducto;
         setTitle("Modificar Producto");
-        setSize(500,530);
+        setSize(550,530);
         setResizable(false);
         setLocationRelativeTo(null);
         Inicio();

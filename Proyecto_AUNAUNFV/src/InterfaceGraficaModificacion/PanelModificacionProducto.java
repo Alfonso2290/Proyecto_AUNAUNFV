@@ -40,7 +40,7 @@ public class PanelModificacionProducto extends JPanel
         Font fuenteCamposboton=new Font("Decker", Font.BOLD, 14);
         
         titulo=new JLabel("MODIFICAR PRODUCTO");
-        titulo.setBounds(145,10,300,30);
+        titulo.setBounds(170,10,300,30);
         titulo.setFont(fuenteTitulo);
         titulo.setForeground(ColorFuente);
         
@@ -60,11 +60,11 @@ public class PanelModificacionProducto extends JPanel
         h1.setBackground(Color.gray);
         
         labelimagen=new JLabel();
-        labelimagen.setBounds(320,70,150,100);
+        labelimagen.setBounds(320,70,200,310);
         labelimagen.setBorder(new LineBorder(Color.gray));
         
         btnCargarFoto=new JButton("Cargar Imagen");
-        btnCargarFoto.setBounds(320,180,150,30);
+        btnCargarFoto.setBounds(320,390,200,30);
         btnCargarFoto.setFont(fuenteCamposboton);
         btnCargarFoto.setBackground(null);
         btnCargarFoto.setForeground(ColorFuente);
@@ -187,14 +187,14 @@ public class PanelModificacionProducto extends JPanel
         h6.setBackground(Color.gray);
         
         btnModificar=new JButton("Modificar");
-        btnModificar.setBounds(125,460,110,30);
+        btnModificar.setBounds(150,460,110,30);
         btnModificar.setFont(fuenteCamposLabel);
         btnModificar.setBackground(null);
         btnModificar.setForeground(ColorFuente);
         btnModificar.addMouseListener(new ColorBotones(ColorFuente,Color.WHITE,btnModificar));
         
         btnCancelar=new JButton("Cancelar");
-        btnCancelar.setBounds(250,460,120,30);
+        btnCancelar.setBounds(275,460,120,30);
         btnCancelar.setFont(fuenteCamposLabel);
         btnCancelar.setBackground(null);
         btnCancelar.setForeground(ColorFuente);
