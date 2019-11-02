@@ -27,7 +27,7 @@ public class PanelImpresionTicketCupon extends JPanel{
         
 	public PanelImpresionTicketCupon(ArrayList<ProductoBEAN> lista,int y,ArrayList<DetalleBEAN> listaDetalle,String numeroTicket) {
             this.lista=lista;
-            this.tamañoInicioY=y-300;
+            this.tamañoInicioY=y-400;
             this.listaDetalle=listaDetalle;
             this.numeroTicket=numeroTicket;
             formato=new DecimalFormat("##.##");
@@ -154,7 +154,7 @@ public class PanelImpresionTicketCupon extends JPanel{
                 mensaje="en cualquiera de nuestros productos";
                 x=40;y=100;dx=300;dy=30;
                 directorio="/imagenes/logo_1.JPG";
-                imgx=60;imgy=140;imgdx=180;imgdy=80;
+                imgx=60;imgy=140;imgdx=180;imgdy=180;
                 
                 URL ruta=this.getClass().getResource(directorio);
                 icono=new JLabel(new ImageIcon(ruta));
@@ -162,7 +162,7 @@ public class PanelImpresionTicketCupon extends JPanel{
             }else{
                 porcentaje="20%";
                 x=105;y=tamañoInicioY + 60;dx=200;dy=30;
-                imgx=60;imgy=tamañoInicioY + 90;imgdx=180;imgdy=80;
+                imgx=60;imgy=tamañoInicioY + 90;imgdx=180;imgdy=180;
                 icono=new JLabel();
                 icono.setBounds(imgx,imgy,imgdx,imgdy);
                  
@@ -195,15 +195,15 @@ public class PanelImpresionTicketCupon extends JPanel{
             msj3.setFont(fondo1);
 
             t1=new JLabel("Términos y Condiciones");
-            t1.setBounds(3, tamañoInicioY + 190, 150, 20);
+            t1.setBounds(3, tamañoInicioY + 290, 150, 20);
             t1.setFont(fondo2);
 
             t2=new JLabel("Válido hasta el 30/12/2019");
-            t2.setBounds(75, tamañoInicioY + 210, 200, 20);
+            t2.setBounds(75, tamañoInicioY + 310, 200, 20);
             t2.setFont(fondo3);
 
             t3=new JLabel("en cualquiera de nuestros establecimientos");
-            t3.setBounds(33, tamañoInicioY + 220, 300, 20);
+            t3.setBounds(33, tamañoInicioY + 320, 300, 20);
             t3.setFont(fondo3);
 
             add(titulo);

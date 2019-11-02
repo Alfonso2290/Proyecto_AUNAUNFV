@@ -53,7 +53,7 @@ public class VentanaImpresionTicketCupon extends JFrame{
     }
     
     private void definirTamañoVentana(){
-        y=300 + 220;
+        y=400 + 220;
         if(listaDetalle!=null){
             for(int i=0;i<listaDetalle.size();i++){
                 y+=15;
