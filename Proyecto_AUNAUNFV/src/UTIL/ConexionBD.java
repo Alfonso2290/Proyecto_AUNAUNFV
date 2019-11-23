@@ -12,7 +12,8 @@ public class ConexionBD {
         on=null;
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            on=DriverManager.getConnection("jdbc:sqlserver://192.168.1.9:1433;databaseName=BDPOLERAS","sa","Lacronfonso1");
+            on=DriverManager.getConnection("jdbc:sqlserver://TOSHIBA:1433;databaseName=BDPOLERAS","sa","1234");
+            //on=DriverManager.getConnection("jdbc:sqlserver://192.168.43.193:1433;databaseName=BDPOLERAS","sa","1234");
             //System.out.println("Conexión exitosa");
             
         }catch(Exception e){

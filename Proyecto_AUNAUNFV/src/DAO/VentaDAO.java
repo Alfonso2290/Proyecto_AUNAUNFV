@@ -14,6 +14,7 @@ public class VentaDAO {
     private ResultSet tabla=null;
     private String sql="";
     private ArrayList<VentaBEAN> lista;
+    private CallableStatement procedimiento=null;
     
     public ArrayList<VentaBEAN> getListaVentas(){
         
@@ -404,6 +405,10 @@ public class VentaDAO {
 
         return codigo;
     }
+    
+    
+    
+    
 }
 
 

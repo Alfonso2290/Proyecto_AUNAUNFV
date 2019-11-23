@@ -5,6 +5,7 @@ package Principal;
 import InterfaceGraficaConsulta.VentanaConsultaClientes;
 import InterfaceGraficaConsulta.VentanaConsultas;
 import InterfaceGraficaRegistro.VentanaRegistros;
+import InterfaceMailing.VentanaMailing;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,7 +14,7 @@ public class VentanaProcesos extends JFrame{
     
     private JPanel lamina;
     private JLabel icono,titulo;
-    private JButton btnRegistrar,btnConsultar,btnCerrarSesion;
+    private JButton btnRegistrar,btnConsultar,btnCerrarSesion,btnMailing;
     
     public VentanaProcesos(){
         
@@ -72,8 +73,25 @@ public class VentanaProcesos extends JFrame{
             }
         });
         
+        btnMailing=new JButton("Mailing");
+        btnMailing.setBounds(25,150,200,30);
+        btnMailing.addMouseListener(new ColorBotones(ColorFuente,Color.WHITE,btnMailing));
+        btnMailing.setBackground(null);
+        btnMailing.setForeground(ColorFuente);
+        btnMailing.setFont(fuenteCamposLabel);
+        btnMailing.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                dispose();
+                VentanaMailing ventana=new VentanaMailing();
+                ventana.setVisible(true);
+                ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }
+        });
+        
         btnCerrarSesion=new JButton("Cerrar Sesión");
-        btnCerrarSesion.setBounds(25,150,200,30);
+        btnCerrarSesion.setBounds(25,190,200,30);
         btnCerrarSesion.addMouseListener(new ColorBotones(ColorFuente,Color.WHITE,btnCerrarSesion));
         btnCerrarSesion.setBackground(null);
         btnCerrarSesion.setForeground(ColorFuente);
@@ -91,6 +109,7 @@ public class VentanaProcesos extends JFrame{
         
         lamina.add(btnRegistrar);
         lamina.add(btnConsultar);
+        lamina.add(btnMailing);
         lamina.add(btnCerrarSesion);
         lamina.add(titulo);
         lamina.setBackground(Color.LIGHT_GRAY.brighter());
