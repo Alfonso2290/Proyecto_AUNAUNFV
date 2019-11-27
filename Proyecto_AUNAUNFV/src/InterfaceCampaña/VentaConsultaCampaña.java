@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import javax.swing.*;
 import java.awt.event.*;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -23,7 +24,10 @@ public class VentaConsultaCampaña extends JFrame{
     private JTable tabla;
     private JScrollPane scroll;
     private JPanel lamina;
-    private JButton btnAtras;
+    private JButton btnAtras,btnFiltro;
+    private JLabel retornar;
+    private String condicionConcatenada;
+    private ResultSet tablaSet;
     
     public VentaConsultaCampaña(ArrayList<String> listaTablas,ArrayList<String> listaCampos){
         setTitle("Ventana Consulta Campañas");
@@ -37,6 +41,23 @@ public class VentaConsultaCampaña extends JFrame{
     }
     
     private void Inicio(){
+        
+        Color ColorFuente=new Color(232,44,12);
+        Font fuenteCamposLabel=new Font("Decker", Font.BOLD, 18);
+        
+        btnFiltro=new JButton("Filtro");
+        btnFiltro.setBounds(670, 30, 100, 30);
+        btnFiltro.addMouseListener(new ColorBotones(ColorFuente,Color.WHITE,btnFiltro));
+        btnFiltro.setFont(fuenteCamposLabel);
+        btnFiltro.setForeground(ColorFuente);
+        btnFiltro.setBackground(null);
+        btnFiltro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+ 
+                enviarFiltro();
+            }
+        });
         
         lamina=new JPanel();
         
@@ -63,8 +84,14 @@ public class VentaConsultaCampaña extends JFrame{
         lamina.setBackground(Color.LIGHT_GRAY.brighter());
         lamina.setLayout(null);
         
-        Color ColorFuente=new Color(232,44,12);
-        Font fuenteCamposLabel=new Font("Decker", Font.BOLD, 18);
+        String ruta="/imagenes/retornar.png";
+        URL url=this.getClass().getResource(ruta);
+        ImageIcon icono=new ImageIcon(url);
+        retornar=new JLabel(icono);
+        retornar.setBounds(780, 30, 30, 30);
+        retornar.addMouseListener(new AccionMouse());
+        
+        
         btnAtras=new JButton(new ImageIcon("src/imagenes/atras.png"));
         btnAtras.setBounds(10,333,30,20);
         btnAtras.addMouseListener(new ColorBotones(ColorFuente,Color.WHITE,btnAtras));
@@ -81,31 +108,102 @@ public class VentaConsultaCampaña extends JFrame{
         });
         
         llenarTabla();
+        lamina.add(btnFiltro);
+        lamina.add(retornar);
         lamina.add(btnAtras);
         lamina.add(scroll);
         add(lamina);
         
     }
     
+    public void enviarFiltro(){
+        VentanaConsultaCondicional ventana=new VentanaConsultaCondicional(this,listaTablas,listaCampos);
+        ventana.setVisible(true);
+    }
+
+    public ResultSet getTablaSet() {
+        return tablaSet;
+    }
+
+    public void setTablaSet(ResultSet tablaSet) {
+        this.tablaSet = tablaSet;
+    }
+
+    public String getCondicionConcatenada() {
+        return condicionConcatenada;
+    }
+
+    public void setCondicionConcatenada(String condicionConcatenada) {
+        this.condicionConcatenada = condicionConcatenada;
+    }
+    
+    public void concatenarCondicionConcatenada(String condicionConcatenada) {
+        this.condicionConcatenada += condicionConcatenada;
+    }
+    
     private void llenarTabla(){
         
         CampañaDAO dao=new CampañaDAO();
-        ResultSet tabla=dao.getListaCampaña(listaTablas, listaCampos);
+        tablaSet=dao.getListaCampaña(listaTablas, listaCampos);
         String[] arreglo;
         
         try {
-            while(tabla.next()){
+            while(tablaSet.next()){
                 
                 arreglo=new String[listaCampos.size()];
                 
                 for(int i=0;i<listaCampos.size();i++){
-                    arreglo[i]=tabla.getString(i+1);
+                    arreglo[i]=tablaSet.getString(i+1);
                 }
                 
                 modelo.addRow(arreglo);
             }
         } catch (SQLException ex) {
             Logger.getLogger(VentaConsultaCampaña.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void llenarTablaFiltro(String condicional){
+        
+        CampañaDAO dao=new CampañaDAO();
+        tablaSet=dao.getListaCampañaFiltro(listaTablas, listaCampos,condicional);
+        String[] arreglo;
+        limpiarTabla();
+        try {
+            while(tablaSet.next()){
+                
+                arreglo=new String[listaCampos.size()];
+                
+                for(int i=0;i<listaCampos.size();i++){
+                    arreglo[i]=tablaSet.getString(i+1);
+                }
+                
+                modelo.addRow(arreglo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VentaConsultaCampaña.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void limpiarTabla()
+    {
+        for(int i=0;i<tabla.getRowCount();i++)
+        {
+            modelo.removeRow(i);
+            i--;
+        }
+    }
+    
+    private class AccionMouse extends MouseAdapter
+    {
+        public void mouseClicked(MouseEvent e)
+        {
+            if(e.getSource()==retornar)
+            {   
+                limpiarTabla();
+                llenarTabla();
+                System.out.println("Condicional " + getCondicionConcatenada());
+            }
         }
     }
     
