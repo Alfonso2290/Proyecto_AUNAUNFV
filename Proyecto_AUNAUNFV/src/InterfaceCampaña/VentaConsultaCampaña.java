@@ -26,7 +26,10 @@ public class VentaConsultaCampaña extends JFrame{
     private JPanel lamina;
     private JButton btnAtras,btnFiltro;
     private JLabel retornar;
-    private String condicionConcatenada;
+    private String condicionJoin; //2
+    private String condicionConcatenada; //3
+    //Consulta cabecera con/sin top //1
+    //Consulta con group by / order by //4 
     private ResultSet tablaSet;
     
     public VentaConsultaCampaña(ArrayList<String> listaTablas,ArrayList<String> listaCampos){
@@ -37,7 +40,14 @@ public class VentaConsultaCampaña extends JFrame{
         setLocationRelativeTo(null);
         this.listaTablas=listaTablas;
         this.listaCampos=listaCampos;
+        setearConsultaJoin();
         Inicio();  
+    }
+    
+    private void setearConsultaJoin(){
+        
+        CampañaDAO dao=new CampañaDAO();
+        setCondicionJoin(dao.getConsultaJoin(listaTablas, listaCampos));
     }
     
     private void Inicio(){
@@ -129,6 +139,14 @@ public class VentaConsultaCampaña extends JFrame{
         this.tablaSet = tablaSet;
     }
 
+    public String getCondicionJoin() {
+        return condicionJoin;
+    }
+
+    public void setCondicionJoin(String condicionJoin) {
+        this.condicionJoin = condicionJoin;
+    }
+    
     public String getCondicionConcatenada() {
         return condicionConcatenada;
     }
@@ -202,6 +220,7 @@ public class VentaConsultaCampaña extends JFrame{
             {   
                 limpiarTabla();
                 llenarTabla();
+                setCondicionConcatenada(null);
                 System.out.println("Condicional " + getCondicionConcatenada());
             }
         }

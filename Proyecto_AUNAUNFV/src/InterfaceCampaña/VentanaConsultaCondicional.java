@@ -10,7 +10,7 @@ public class VentanaConsultaCondicional  extends JFrame{
     
     private JLabel titulo,campo,operador,valor;
     private JTextField txtOtro,txtValor;
-    private JComboBox cbCampo,cbOperador;
+    private JComboBox cbCampo,cbOperador,cbAnexo;
     private JButton btnAceptar,btnCancelar,btnAtras;
     private JSeparator h1,h2,h3;
     private ArrayList<String> listaCampos,listaTablas;
@@ -45,6 +45,18 @@ public class VentanaConsultaCondicional  extends JFrame{
         titulo.setBounds(80,10,300,30);
         titulo.setFont(fuenteTitulo);
         titulo.setForeground(ColorFuente);
+        
+        cbAnexo=new JComboBox();
+        cbAnexo.addItem("AND");
+        cbAnexo.addItem("OR");
+        cbAnexo.setBounds(50,50,80,20);
+        cbAnexo.setFont(fuenteCampos);
+        cbAnexo.setBorder(null);
+        
+        if(ventana.getCondicionConcatenada()==null)
+            cbAnexo.setVisible(false);
+        else
+            cbAnexo.setVisible(true);
         
         campo=new JLabel("Campo");
         campo.setBounds(50,70,120,20);
@@ -171,6 +183,7 @@ public class VentanaConsultaCondicional  extends JFrame{
         lamina.add(h1);
         lamina.add(h2);
         lamina.add(h3);
+        lamina.add(cbAnexo);
         
         add(lamina);
     }
@@ -245,10 +258,12 @@ public class VentanaConsultaCondicional  extends JFrame{
                 ventana.setCondicionConcatenada(condicion);
             }else{
                 
+                String anexo=cbAnexo.getSelectedItem().toString();
+                
                 if(cbCampo.isVisible()){
-                    condicion=" AND " + campoSelec + " " + operadorSelec + " '" +valorSelec + "' "; 
+                    condicion=" " + anexo + " " + campoSelec + " " + operadorSelec + " '" +valorSelec + "' "; 
                 }else if(txtOtro.isVisible()){
-                    condicion=" AND " + campoLlenado + " " + operadorSelec + " '" +valorSelec + "' "; 
+                    condicion=" " + anexo + " " + campoLlenado + " " + operadorSelec + " '" +valorSelec + "' "; 
                 }
                 
                 ventana.concatenarCondicionConcatenada(condicion);

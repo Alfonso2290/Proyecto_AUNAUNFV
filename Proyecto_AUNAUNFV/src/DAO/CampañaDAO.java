@@ -125,4 +125,47 @@ public class CampañaDAO {
         
         return tabla;
     }
+    
+    public String getConsultaJoin(ArrayList<String> listaTablas, ArrayList<String> listaCampos){
+        
+        sql="";
+            
+        for(int i=0;i<listaCampos.size();i++){
+
+            if(i==listaCampos.size()-1)
+                sql+=listaCampos.get(i) + " ";
+            else
+                sql+=listaCampos.get(i) + ",";
+        }
+
+        sql+="FROM ";
+
+        for(int i=0;i<listaTablas.size();i++){
+
+            if(i==0){
+
+                sql+="PERSONA INNER JOIN CLIENTE ";
+                sql+="ON PERSONA.DNI=CLIENTE.DNI ";
+
+            }else if(i==1){
+
+                sql+="INNER JOIN VENTA ";
+                sql+="ON CLIENTE.DNI=VENTA.DNI ";
+
+            }else if(i==2){
+
+                sql+="INNER JOIN DETALLE_VENTA ";
+                sql+="ON VENTA.NUM_TICKET=DETALLE_VENTA.NUM_TICKET ";
+
+            }else if(i==3){
+
+                sql+="INNER JOIN PRODUCTO ";
+                sql+="ON DETALLE_VENTA.COD_PRODUCTO=PRODUCTO.COD_PRODUCTO ";
+
+            }    
+
+        }
+        
+        return sql;
+    }
 }
