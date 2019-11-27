@@ -163,9 +163,6 @@ public class VentanaConsultaCondicional  extends JFrame{
             @Override
             public void actionPerformed(ActionEvent ae) {
                 dispose();
-                VentaConsultaCampaña ventana=new VentaConsultaCampaña(listaTablas,listaCampos);
-                ventana.setVisible(true);
-                ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
         });
         

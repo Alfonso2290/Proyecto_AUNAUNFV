@@ -24,10 +24,12 @@ public class VentaConsultaCampaña extends JFrame{
     private JTable tabla;
     private JScrollPane scroll;
     private JPanel lamina;
-    private JButton btnAtras,btnFiltro;
+    private JButton btnAtras,btnFiltro,btnTop;
     private JLabel retornar;
     private String condicionJoin; //2
     private String condicionConcatenada; //3
+    private String condicionTop;
+    private String condicionBot;
     //Consulta cabecera con/sin top //1
     //Consulta con group by / order by //4 
     private ResultSet tablaSet;
@@ -54,6 +56,20 @@ public class VentaConsultaCampaña extends JFrame{
         
         Color ColorFuente=new Color(232,44,12);
         Font fuenteCamposLabel=new Font("Decker", Font.BOLD, 18);
+        
+        btnTop=new JButton("Top");
+        btnTop.setBounds(540, 30, 100, 30);
+        btnTop.addMouseListener(new ColorBotones(ColorFuente,Color.WHITE,btnTop));
+        btnTop.setFont(fuenteCamposLabel);
+        btnTop.setForeground(ColorFuente);
+        btnTop.setBackground(null);
+        btnTop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+ 
+                enviarTop();
+            }
+        });
         
         btnFiltro=new JButton("Filtro");
         btnFiltro.setBounds(670, 30, 100, 30);
@@ -118,6 +134,7 @@ public class VentaConsultaCampaña extends JFrame{
         });
         
         llenarTabla();
+        lamina.add(btnTop);
         lamina.add(btnFiltro);
         lamina.add(retornar);
         lamina.add(btnAtras);
@@ -128,6 +145,11 @@ public class VentaConsultaCampaña extends JFrame{
     
     public void enviarFiltro(){
         VentanaConsultaCondicional ventana=new VentanaConsultaCondicional(this,listaTablas,listaCampos);
+        ventana.setVisible(true);
+    }
+    
+    public void enviarTop(){
+        VentanaConsultaTop ventana=new VentanaConsultaTop(this,listaTablas,listaCampos);
         ventana.setVisible(true);
     }
 
@@ -158,6 +180,24 @@ public class VentaConsultaCampaña extends JFrame{
     public void concatenarCondicionConcatenada(String condicionConcatenada) {
         this.condicionConcatenada += condicionConcatenada;
     }
+
+    public String getCondicionTop() {
+        return condicionTop;
+    }
+
+    public void setCondicionTop(String condicionTop) {
+        this.condicionTop = condicionTop;
+    }
+    
+    public String getCondicionBot() {
+        return condicionBot;
+    }
+
+    public void setCondicionBot(String condicionBot) {
+        this.condicionBot = condicionBot;
+    }
+    
+    
     
     private void llenarTabla(){
         
@@ -185,6 +225,28 @@ public class VentaConsultaCampaña extends JFrame{
         
         CampañaDAO dao=new CampañaDAO();
         tablaSet=dao.getListaCampañaFiltro(listaTablas, listaCampos,condicional);
+        String[] arreglo;
+        limpiarTabla();
+        try {
+            while(tablaSet.next()){
+                
+                arreglo=new String[listaCampos.size()];
+                
+                for(int i=0;i<listaCampos.size();i++){
+                    arreglo[i]=tablaSet.getString(i+1);
+                }
+                
+                modelo.addRow(arreglo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VentaConsultaCampaña.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void llenarTablaFiltroTop(String condicionalTop,String condicionalBot){
+        
+        CampañaDAO dao=new CampañaDAO();
+        tablaSet=dao.getListaCampañaFiltroTop(condicionalTop,condicionJoin,condicionConcatenada,condicionalBot);
         String[] arreglo;
         limpiarTabla();
         try {

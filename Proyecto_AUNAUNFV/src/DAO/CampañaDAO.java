@@ -126,6 +126,29 @@ public class CampañaDAO {
         return tabla;
     }
     
+    public ResultSet getListaCampañaFiltroTop(String condicionalTop,String condicionalJoin,String condicionalWhere,String condicionalBot){
+        
+        try{
+            
+            conexion=new ConexionBD();
+            sql=condicionalTop + " ";
+            sql+=" " + condicionalJoin + " ";
+            if(condicionalWhere==null)
+                sql+=" ";
+            else
+                sql+=" " + condicionalWhere + " ";
+            sql+=" " + condicionalBot + " ";
+            
+            instruccion=conexion.getConexionBD().prepareStatement(sql);
+            tabla=instruccion.executeQuery();
+            
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        
+        return tabla;
+    }
+    
     public String getConsultaJoin(ArrayList<String> listaTablas, ArrayList<String> listaCampos){
         
         sql="";
