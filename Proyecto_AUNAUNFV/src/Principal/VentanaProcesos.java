@@ -2,6 +2,7 @@
 package Principal;
 
 
+import InterfaceCampaña.VentanaCampaña;
 import InterfaceGraficaConsulta.VentanaConsultaClientes;
 import InterfaceGraficaConsulta.VentanaConsultas;
 import InterfaceGraficaRegistro.VentanaRegistros;
@@ -84,7 +85,8 @@ public class VentanaProcesos extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 
                 dispose();
-                VentanaMailing ventana=new VentanaMailing();
+                //VentanaMailing ventana=new VentanaMailing();
+                VentanaCampaña ventana=new VentanaCampaña();
                 ventana.setVisible(true);
                 ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
