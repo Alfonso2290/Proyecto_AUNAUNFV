@@ -41,7 +41,7 @@ public class VentanaConsultaTop  extends JFrame{
         Font fuenteMensaje=new Font("Decker",Font.PLAIN,12);
         
         titulo=new JLabel("FILTRO TOP");
-        titulo.setBounds(80,10,300,30);
+        titulo.setBounds(120,10,300,30);
         titulo.setFont(fuenteTitulo);
         titulo.setForeground(ColorFuente);
         

@@ -17,6 +17,7 @@ public class CampañaDAO {
     private ResultSet tabla=null;
     private String sql="";
     private ArrayList<String> lista;
+    private CallableStatement procedimiento=null;
     
     public ResultSet getListaCampaña(ArrayList<String> listaTablas, ArrayList<String> listaCampos){
         
@@ -190,5 +191,44 @@ public class CampañaDAO {
         }
         
         return sql;
+    }
+    
+    public void procCreacionDeFuncion(String consulta){
+        
+        try {
+            
+            conexion=new ConexionBD();
+            sql="{CALL CREAR_FUNCION(?)}";
+            procedimiento=conexion.getConexionBD().prepareCall(sql);
+            procedimiento.setString(1, consulta);
+            procedimiento.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Creacion de tabla temporal correctamente");
+        } catch (SQLException e) {
+            
+            JOptionPane.showMessageDialog(null, "Error al crear tabla temporal");
+        }
+        
+    }
+    
+    public void procEnvioEmail(String email,String asunto,String mensaje){
+        
+        try {
+            
+            conexion=new ConexionBD();
+            sql="{CALL ENVIAR_CORREO_MASIVO(?,?,?,?)}";
+            procedimiento=conexion.getConexionBD().prepareCall(sql);
+            procedimiento.setString(1, email);
+            procedimiento.setString(2,"Enviar Correos AunaUNFV.Anexo07");
+            procedimiento.setString(3,asunto);
+            procedimiento.setString(4,mensaje);
+            procedimiento.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Envío de email satisfactoriamente");
+        } catch (SQLException e) {
+            
+            JOptionPane.showMessageDialog(null, "Envío de email erroneo");
+        }
+        
     }
 }

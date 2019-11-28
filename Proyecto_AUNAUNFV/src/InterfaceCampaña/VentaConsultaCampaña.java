@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class VentaConsultaCampaña extends JFrame{
     
-    private ArrayList<String> listaTablas,listaCampos;
+    private ArrayList<String> listaTablas,listaCampos,listaEmails;
     private DefaultTableModel modelo;
     private JTable tabla;
     private JScrollPane scroll;
@@ -213,12 +213,21 @@ public class VentaConsultaCampaña extends JFrame{
     
     public void envioEmail(){
         
-        String cTop,cJoin,cWhere,cBot;
+        String cTop="",cJoin,cWhere,cBot;
         
-        if(condicionTop==null)
+        if(condicionTop==null){
             cTop=" ";
-        else
-            cTop=condicionTop;
+        }else{
+            String aux=condicionTop;
+            
+            for(int i=0;i<aux.length();i++){
+                
+                if(i>=7)
+                    cTop+=aux.charAt(i);
+                
+            }
+            
+        }
         
         if(condicionConcatenada==null)
             cWhere=" ";
@@ -230,17 +239,80 @@ public class VentaConsultaCampaña extends JFrame{
         else
             cBot=condicionBot;
         
-        if(condicionTop==null)
-            cJoin="SELECT " + condicionJoin;
-        else
-            cJoin=condicionJoin;
+//        if(condicionTop==null)
+//            cJoin="SELECT " + condicionJoin;
+//        else
+        cJoin=condicionJoin;
         
         String consultaTotal=cTop + " " + cJoin + " " + cWhere + " " + cBot;
         
         System.out.println(consultaTotal);
         
         // con la consulta total crear el procedimiento almacenado que cree la funcion
+        //CampañaDAO dao=new CampañaDAO();
+        //dao.procCreacionDeFuncion(consultaTotal);
+        if(verificarCampoEmail()){
+            
+            capturarEmails();
+            System.out.println(listaEmails);
+            VentanaEnvioEmail ventana=new VentanaEnvioEmail(listaEmails);
+            ventana.setVisible(true);
+            
+        }else{
+            
+            JOptionPane.showMessageDialog(null, "Ud. debe seleccionar el campo 'EMAIL' para enviar los emails");
+        }
+        
         // crear formulario para llenar campos (del mensaje) y llamar procedimiento almacenado
+    }
+    
+    
+    private void capturarEmails(){
+        
+        listaEmails=new ArrayList<>();
+        
+        for(int i=0;i<tabla.getRowCount();i++){
+            
+            for(int j=0;j<tabla.getColumnCount();j++){
+                
+                if(modelo.getColumnName(j).equals("PERSONA.EMAIL")){
+                    
+                    String campo=modelo.getValueAt(i, j).toString();
+                    if(verificarDuplicidadLista(campo)==false)
+                        listaEmails.add(campo);
+                }
+            }
+        }
+        
+        
+    }
+    
+    private boolean verificarDuplicidadLista(String prueba){
+        boolean b=false;
+        
+        for(String s:listaEmails){
+            if(prueba.equals(s))
+                b=true;
+        }
+        
+        
+        return b;
+        
+    }
+    
+    
+    private boolean verificarCampoEmail(){
+        boolean b=false;
+        
+        for(String campo: listaCampos){
+            
+            if(campo.equals("PERSONA.EMAIL"))
+                b=true;
+            
+        }
+        
+        return b;
+        
     }
     
     private void llenarTabla(){
