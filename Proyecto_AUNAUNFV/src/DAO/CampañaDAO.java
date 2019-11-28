@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import BEAN.CampañaBEAN;
 import java.sql.*;
 import java.util.*;
 import UTIL.ConexionBD;
@@ -230,5 +231,35 @@ public class CampañaDAO {
             JOptionPane.showMessageDialog(null, "Envío de email erroneo");
         }
         
+    }
+    
+    public void insertarCampaña(CampañaBEAN obj){
+        try {
+            conexion=new ConexionBD();
+            sql="INSERT INTO CAMPAÑA(NOMBRE,DESCRIPCION) VALUES (?,?)";
+            instruccion=conexion.getConexionBD().prepareStatement(sql);
+            instruccion.setString(1, obj.getNombre());
+            instruccion.setString(2, obj.getDescripcion());
+            instruccion.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Campaña registrada exitosamente");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al registrar campaña");
+        }
+    }
+    
+    public void actualizarCampaña(CampañaBEAN obj){
+        try {
+            conexion=new ConexionBD();
+            sql="UPDATE CAMPAÑA SET ASUNTO=?, MENSAJE=?, CADENA_EMAIL=? WHERE NOMBRE=?";
+            instruccion=conexion.getConexionBD().prepareStatement(sql);
+            instruccion.setString(1, obj.getAsunto());
+            instruccion.setString(2, obj.getMensaje());
+            instruccion.setString(3, obj.getCadenaEmails());
+            instruccion.setString(4, obj.getNombre());
+            instruccion.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Campaña actualizada exitosamente");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar campaña");
+        }
     }
 }

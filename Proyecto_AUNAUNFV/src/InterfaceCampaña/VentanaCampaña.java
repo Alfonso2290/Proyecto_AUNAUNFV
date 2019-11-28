@@ -1,6 +1,8 @@
 
 package InterfaceCampaña;
 
+import BEAN.CampañaBEAN;
+import DAO.CampañaDAO;
 import Principal.VentanaProcesos;
 import java.awt.Color;
 import java.awt.Font;
@@ -204,8 +206,14 @@ public class VentanaCampaña extends javax.swing.JFrame {
             
         }else{
             
+            CampañaDAO dao=new CampañaDAO();
+            CampañaBEAN obj=new CampañaBEAN();
+            obj.setNombre(txt1.getText());
+            obj.setDescripcion(txt2.getText());
+            dao.insertarCampaña(obj);
+            
             dispose();
-            VentanaSeleccionTablas v=new VentanaSeleccionTablas();
+            VentanaSeleccionTablas v=new VentanaSeleccionTablas(obj.getNombre());
             v.setVisible(true);
             v.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             

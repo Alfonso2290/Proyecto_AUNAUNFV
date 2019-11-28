@@ -1,6 +1,7 @@
 
 package InterfaceCampaña;
 
+import BEAN.CampañaBEAN;
 import DAO.CampañaDAO;
 import javax.swing.*;
 import java.awt.event.*;
@@ -16,9 +17,11 @@ public class VentanaEnvioEmail extends JFrame{
     private JSeparator h1;
     private ArrayList<String> listaEmails;
     private JPanel lamina;
+    private String nombreCampaña;
     
-    public VentanaEnvioEmail(ArrayList<String> listaEmails)
+    public VentanaEnvioEmail(ArrayList<String> listaEmails,String nombreCampaña)
     {
+        this.nombreCampaña=nombreCampaña;
         this.listaEmails=listaEmails;
         setTitle("Redacción Email");
         setSize(350,350);
@@ -153,6 +156,16 @@ public class VentanaEnvioEmail extends JFrame{
                 
             }
             dao.procEnvioEmail(emailsConcatenados, asuntoSel, mensajeSel);
+            
+            CampañaBEAN obj=new CampañaBEAN();
+            obj.setNombre(nombreCampaña);
+            obj.setCadenaEmails(emailsConcatenados);
+            obj.setAsunto(asuntoSel);
+            obj.setMensaje(mensajeSel);
+            
+            CampañaDAO camdao=new CampañaDAO();
+            camdao.actualizarCampaña(obj);
+            
             limpiarCampos();
         }
     }

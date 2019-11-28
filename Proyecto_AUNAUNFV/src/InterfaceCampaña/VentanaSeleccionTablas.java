@@ -12,9 +12,11 @@ public class VentanaSeleccionTablas extends javax.swing.JFrame {
     
     DefaultListModel modeloLista,modeloLista3,modeloLista4,modeloLista5;
     ArrayList<String> listaTablas,listaCampos;
+    String nombreCampaña;
     
     
-    public VentanaSeleccionTablas() {
+    public VentanaSeleccionTablas(String nombreCampaña) {
+        this.nombreCampaña=nombreCampaña;
         initComponents();
         setSize(400,400);
         setLocationRelativeTo(null);
@@ -592,7 +594,7 @@ public class VentanaSeleccionTablas extends javax.swing.JFrame {
         //llenarListCampos();
         //System.out.println(listaCampos);
         dispose();
-        VentaConsultaCampaña ventana=new VentaConsultaCampaña(listaTablas,listaCampos);
+        VentaConsultaCampaña ventana=new VentaConsultaCampaña(listaTablas,listaCampos,nombreCampaña);
         ventana.setVisible(true);
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }//GEN-LAST:event_btnConfirmar1ActionPerformed
@@ -668,7 +670,7 @@ public class VentanaSeleccionTablas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaSeleccionTablas().setVisible(true);
+                new VentanaSeleccionTablas("").setVisible(true);
             }
         });
     }

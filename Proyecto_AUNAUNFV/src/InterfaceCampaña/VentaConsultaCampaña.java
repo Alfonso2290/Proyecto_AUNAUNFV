@@ -33,8 +33,10 @@ public class VentaConsultaCampaña extends JFrame{
     //Consulta cabecera con/sin top //1
     //Consulta con group by / order by //4 
     private ResultSet tablaSet;
+    private String nombreCampaña;
     
-    public VentaConsultaCampaña(ArrayList<String> listaTablas,ArrayList<String> listaCampos){
+    public VentaConsultaCampaña(ArrayList<String> listaTablas,ArrayList<String> listaCampos,String nombreCampaña){
+        this.nombreCampaña=nombreCampaña;
         setTitle("Ventana Consulta Campañas");
         Dimension tamañoPantalla=Toolkit.getDefaultToolkit().getScreenSize();
         setSize(tamañoPantalla.width*3/5,tamañoPantalla.height/2+35);
@@ -255,7 +257,7 @@ public class VentaConsultaCampaña extends JFrame{
             
             capturarEmails();
             System.out.println(listaEmails);
-            VentanaEnvioEmail ventana=new VentanaEnvioEmail(listaEmails);
+            VentanaEnvioEmail ventana=new VentanaEnvioEmail(listaEmails,nombreCampaña);
             ventana.setVisible(true);
             
         }else{
