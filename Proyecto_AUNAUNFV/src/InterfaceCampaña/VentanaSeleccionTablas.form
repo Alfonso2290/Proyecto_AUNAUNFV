@@ -93,9 +93,9 @@
                   <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="tit1" min="-2" pref="23" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lbl1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lbl2" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -265,10 +265,12 @@
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   <Component id="tit2" min="-2" pref="23" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lbl5" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="lbl4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lbl3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbl4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">

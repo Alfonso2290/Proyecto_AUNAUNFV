@@ -24,7 +24,7 @@ public class VentaConsultaCampaña extends JFrame{
     private JTable tabla;
     private JScrollPane scroll;
     private JPanel lamina;
-    private JButton btnAtras,btnFiltro,btnTop;
+    private JButton btnAtras,btnFiltro,btnTop,btnEnvioMailing;
     private JLabel retornar;
     private String condicionJoin; //2
     private String condicionConcatenada; //3
@@ -37,7 +37,7 @@ public class VentaConsultaCampaña extends JFrame{
     public VentaConsultaCampaña(ArrayList<String> listaTablas,ArrayList<String> listaCampos){
         setTitle("Ventana Consulta Campañas");
         Dimension tamañoPantalla=Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(tamañoPantalla.width*3/5,tamañoPantalla.height/2);
+        setSize(tamañoPantalla.width*3/5,tamañoPantalla.height/2+35);
         setResizable(false);
         setLocationRelativeTo(null);
         this.listaTablas=listaTablas;
@@ -119,7 +119,7 @@ public class VentaConsultaCampaña extends JFrame{
         
         
         btnAtras=new JButton(new ImageIcon("src/imagenes/atras.png"));
-        btnAtras.setBounds(10,333,30,20);
+        btnAtras.setBounds(10,333+30,30,20);
         btnAtras.addMouseListener(new ColorBotones(ColorFuente,Color.WHITE,btnAtras));
         btnAtras.setBackground(null);
         btnAtras.setForeground(ColorFuente);
@@ -133,11 +133,25 @@ public class VentaConsultaCampaña extends JFrame{
             }
         });
         
+        btnEnvioMailing=new JButton("Enviar Mailing");
+        btnEnvioMailing.setBounds(620, 350, 180, 30);
+        btnEnvioMailing.addMouseListener(new ColorBotones(ColorFuente,Color.WHITE,btnEnvioMailing));
+        btnEnvioMailing.setFont(fuenteCamposLabel);
+        btnEnvioMailing.setForeground(ColorFuente);
+        btnEnvioMailing.setBackground(null);
+        btnEnvioMailing.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                envioEmail();
+            }
+        });
+        
         llenarTabla();
         lamina.add(btnTop);
         lamina.add(btnFiltro);
         lamina.add(retornar);
         lamina.add(btnAtras);
+        lamina.add(btnEnvioMailing);
         lamina.add(scroll);
         add(lamina);
         
@@ -197,7 +211,37 @@ public class VentaConsultaCampaña extends JFrame{
         this.condicionBot = condicionBot;
     }
     
-    
+    public void envioEmail(){
+        
+        String cTop,cJoin,cWhere,cBot;
+        
+        if(condicionTop==null)
+            cTop=" ";
+        else
+            cTop=condicionTop;
+        
+        if(condicionConcatenada==null)
+            cWhere=" ";
+        else
+            cWhere=condicionConcatenada;
+        
+        if(condicionBot==null)
+            cBot=" ";
+        else
+            cBot=condicionBot;
+        
+        if(condicionTop==null)
+            cJoin="SELECT " + condicionJoin;
+        else
+            cJoin=condicionJoin;
+        
+        String consultaTotal=cTop + " " + cJoin + " " + cWhere + " " + cBot;
+        
+        System.out.println(consultaTotal);
+        
+        // con la consulta total crear el procedimiento almacenado que cree la funcion
+        // crear formulario para llenar campos (del mensaje) y llamar procedimiento almacenado
+    }
     
     private void llenarTabla(){
         
@@ -285,10 +329,10 @@ public class VentaConsultaCampaña extends JFrame{
                 setCondicionConcatenada(null);
                 setCondicionTop(null);
                 setCondicionBot(null);
-                System.out.println("Condicional: " + getCondicionTop() + "\n"+
+                /*System.out.println("Condicional: " + getCondicionTop() + "\n"+
                                                    getCondicionJoin() + "\n"
                                                     + getCondicionConcatenada() + "\n" 
-                                                    + getCondicionBot());
+                                                    + getCondicionBot());*/
             }
         }
     }
