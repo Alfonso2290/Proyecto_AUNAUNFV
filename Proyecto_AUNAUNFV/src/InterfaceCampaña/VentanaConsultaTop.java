@@ -214,13 +214,14 @@ public class VentanaConsultaTop  extends JFrame{
     public void aceptar(){
         
         //FALTA
-        String topSelec,agrupacionSelec,funcionSelec,ordenSelec,ordenCampoSelec;
+        String topSelec,agrupacionSelec,funcionSelec,ordenSelec,ordenCampoSelec,funcionOrdenarSelec;
         
         topSelec=cbTop.getSelectedItem().toString();
         ordenSelec=cbOrden.getSelectedItem().toString();
         funcionSelec=cbFuncionAgregada.getSelectedItem().toString();
         agrupacionSelec=cbAgrupacion.getSelectedItem().toString();
         ordenCampoSelec=cbCampoOrden.getSelectedItem().toString();
+        funcionOrdenarSelec=cbFuncionOrdenar.getSelectedItem().toString();
         
         String condicionTop="";
         String condicionBot="";
@@ -237,28 +238,45 @@ public class VentanaConsultaTop  extends JFrame{
             
             JOptionPane.showMessageDialog(null, "Ud. debe seleccionar un Campo a ordenar");
             cbCampoOrden.requestFocus();
-        }else if(funcionSelec.equals("Ninguna")){
-            
-            JOptionPane.showMessageDialog(null, "Ud. debe seleccionar una Función");
-            cbFuncionAgregada.requestFocus();
-        }else if(agrupacionSelec.equals("--Seleccionar campo--")){
-            
-            JOptionPane.showMessageDialog(null, "Ud. debe seleccionar un Campo");
-            cbAgrupacion.requestFocus();
         }else{
             
            condicionTop="SELECT TOP " + topSelec + " ";
-           condicionBot="GROUP BY " + funcionSelec  + " (" + agrupacionSelec + ") ";
+           condicionBot="GROUP BY ";
            
-           for(String campo: listaCampos)
-               condicionBot+=", " + campo + " ";
+           if(agrupacionSelec.equals("--Seleccionar campo--"))
+                agrupacionSelec=" ";
            
-           if(topSelec.equals("ASCENDENTE"))
-               topSelec="ASC";
-            else if(topSelec.equals("DESCENDENTE"))
-                topSelec="DESC";
+           if(funcionSelec.equals("Ninguna"))
+               condicionBot+=" " + agrupacionSelec + " ";
+           else
+               condicionBot+=" " + funcionSelec  + " (" + agrupacionSelec + ") ";
            
-            condicionBot+=" ORDER BY " +  ordenCampoSelec + " " + topSelec  + " ";
+           for(int i=0;i<listaCampos.size();i++){
+               
+               if(agrupacionSelec.equals(" ")){
+                   
+                   if(i==0)
+                        condicionBot+=" " + listaCampos.get(i) + " ";
+                   else
+                       condicionBot+=" ," + listaCampos.get(i) + " ";
+               }else{
+                   condicionBot+=" ," + listaCampos.get(i) + " ";
+               }
+           }
+               
+           
+           if(ordenSelec.equals("ASCENDENTE"))
+               ordenSelec="ASC";
+            else if(ordenSelec.equals("DESCENDENTE"))
+                ordenSelec="DESC";
+           
+            condicionBot+=" ORDER BY ";
+            
+            
+            if(funcionOrdenarSelec.equals("Ninguna"))
+                condicionBot+=" " + ordenCampoSelec + " " + ordenSelec;
+            else
+                condicionBot+=" " + funcionOrdenarSelec + " ( " + ordenCampoSelec + ") " + ordenSelec  + " ";
                 
             ventana.setCondicionTop(condicionTop);
             ventana.setCondicionBot(condicionBot);

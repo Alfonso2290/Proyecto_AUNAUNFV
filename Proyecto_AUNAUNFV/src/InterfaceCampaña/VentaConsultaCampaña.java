@@ -283,7 +283,12 @@ public class VentaConsultaCampaña extends JFrame{
                 limpiarTabla();
                 llenarTabla();
                 setCondicionConcatenada(null);
-                System.out.println("Condicional " + getCondicionConcatenada());
+                setCondicionTop(null);
+                setCondicionBot(null);
+                System.out.println("Condicional: " + getCondicionTop() + "\n"+
+                                                   getCondicionJoin() + "\n"
+                                                    + getCondicionConcatenada() + "\n" 
+                                                    + getCondicionBot());
             }
         }
     }
