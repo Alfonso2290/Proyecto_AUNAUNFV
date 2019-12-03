@@ -615,6 +615,7 @@ public class VentanaSeleccionTablas extends javax.swing.JFrame {
            modeloLista4.addElement("MONTO_TOTAL");
            modeloLista4.addElement("IGV");
            modeloLista4.addElement("MONTO_NETO");
+           modeloLista4.addElement("ESTADO");
        }else if(lista3.getSelectedValue().equals("DETALLE_VENTA")){
            modeloLista4.removeAllElements();
            modeloLista4.addElement("NUM_TICKET");

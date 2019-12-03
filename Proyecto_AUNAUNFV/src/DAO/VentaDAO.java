@@ -33,6 +33,7 @@ public class VentaDAO {
                 venta.setMontoTotal(tabla.getDouble(4));
                 venta.setIgv(tabla.getDouble(5));
                 venta.setMontoNeto(tabla.getDouble(6));
+                venta.setEstado(tabla.getString(7));
                 
                 lista.add(venta);
             }
@@ -87,6 +88,7 @@ public class VentaDAO {
                 venta.setMontoTotal(tabla.getDouble(4));
                 venta.setIgv(tabla.getDouble(5));
                 venta.setMontoNeto(tabla.getDouble(6));
+                venta.setEstado(tabla.getString(7));
                 
                 lista.add(venta);
             }
@@ -117,6 +119,7 @@ public class VentaDAO {
                 venta.setMontoTotal(tabla.getDouble(4));
                 venta.setIgv(tabla.getDouble(5));
                 venta.setMontoNeto(tabla.getDouble(6));
+                venta.setEstado(tabla.getString(7));
                 
                 lista.add(venta);
             }
@@ -147,6 +150,7 @@ public class VentaDAO {
                 venta.setMontoTotal(tabla.getDouble(4));
                 venta.setIgv(tabla.getDouble(5));
                 venta.setMontoNeto(tabla.getDouble(6));
+                venta.setEstado(tabla.getString(7));
                 
                 lista.add(venta);
             }
@@ -178,6 +182,7 @@ public class VentaDAO {
                 venta.setMontoTotal(tabla.getDouble(4));
                 venta.setIgv(tabla.getDouble(5));
                 venta.setMontoNeto(tabla.getDouble(6));
+                venta.setEstado(tabla.getString(7));
                 
                 lista.add(venta);
             }
@@ -209,6 +214,7 @@ public class VentaDAO {
                 venta.setMontoTotal(tabla.getDouble(4));
                 venta.setIgv(tabla.getDouble(5));
                 venta.setMontoNeto(tabla.getDouble(6));
+                venta.setEstado(tabla.getString(7));
                 
                 lista.add(venta);
             }
@@ -240,6 +246,7 @@ public class VentaDAO {
                 venta.setMontoTotal(tabla.getDouble(4));
                 venta.setIgv(tabla.getDouble(5));
                 venta.setMontoNeto(tabla.getDouble(6));
+                venta.setEstado(tabla.getString(7));
                 
                 lista.add(venta);
             }
@@ -272,6 +279,7 @@ public class VentaDAO {
                 venta.setMontoTotal(tabla.getDouble(4));
                 venta.setIgv(tabla.getDouble(5));
                 venta.setMontoNeto(tabla.getDouble(6));
+                venta.setEstado(tabla.getString(7));
                 
                 lista.add(venta);
             }
@@ -345,7 +353,7 @@ public class VentaDAO {
         
         try{
             conexion=new ConexionBD();
-            sql="INSERT INTO VENTA VALUES(?,?,?,?,?,?)";
+            sql="INSERT INTO VENTA VALUES(?,?,?,?,?,?,?)";
             instruccion=conexion.getConexionBD().prepareStatement(sql);
             instruccion.setString(1, venta.getNumTicket());
             instruccion.setString(2, venta.getDni());
@@ -353,6 +361,7 @@ public class VentaDAO {
             instruccion.setDouble(4, venta.getMontoTotal());
             instruccion.setDouble(5, venta.getIgv());
             instruccion.setDouble(6, venta.getMontoNeto());
+            instruccion.setString(7,"CANCELADO");
             instruccion.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se ha registrado la venta exitosamente");
             

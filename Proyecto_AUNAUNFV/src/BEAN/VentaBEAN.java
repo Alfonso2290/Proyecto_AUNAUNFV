@@ -2,8 +2,16 @@
 package BEAN;
 
 public class VentaBEAN {
-    private String numTicket,dni,fecha,fechaInicio,fechaFinal;
+    private String numTicket,dni,fecha,fechaInicio,fechaFinal,estado;
     private double montoTotal,igv,montoNeto;
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
     public String getNumTicket() {
         return numTicket;

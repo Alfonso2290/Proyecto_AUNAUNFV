@@ -342,6 +342,7 @@ public class PanelConsultaVentas extends JPanel
         titulosList.add("Monto Total");
         titulosList.add("IGV");
         titulosList.add("Monto Neto");
+        titulosList.add("Estado");
         titulosList.add(" ");
         titulosList.add(" ");
 
@@ -365,6 +366,7 @@ public class PanelConsultaVentas extends JPanel
             informacion[x][UtilidadesVentas.FECHA_REGISTRO] = lista.get(x).getFecha()+ "";
             informacion[x][UtilidadesVentas.MONTO_TOTAL] = lista.get(x).getMontoTotal()+ "";
             informacion[x][UtilidadesVentas.IGV] = lista.get(x).getIgv()+ "";
+            informacion[x][UtilidadesVentas.ESTADO] = lista.get(x).getEstado()+ "";
             informacion[x][UtilidadesVentas.MONTO_NETO] = lista.get(x).getMontoNeto()+ "";
             informacion[x][UtilidadesVentas.DETALLE_VENTA] = "DETALLE";
             informacion[x][UtilidadesVentas.ELIMINAR] = "ELIMINAR";
@@ -384,6 +386,7 @@ public class PanelConsultaVentas extends JPanel
         tabla.getColumnModel().getColumn(UtilidadesVentas.MONTO_TOTAL).setCellRenderer(new GestionCeldasVentas("numerico"));
         tabla.getColumnModel().getColumn(UtilidadesVentas.IGV).setCellRenderer(new GestionCeldasVentas("numerico"));
         tabla.getColumnModel().getColumn(UtilidadesVentas.MONTO_NETO).setCellRenderer(new GestionCeldasVentas("numerico"));
+        tabla.getColumnModel().getColumn(UtilidadesVentas.ESTADO).setCellRenderer(new GestionCeldasVentas("texto"));
         tabla.getColumnModel().getColumn(UtilidadesVentas.DETALLE_VENTA).setCellRenderer(new GestionCeldasVentas("boton"));
         tabla.getColumnModel().getColumn(UtilidadesVentas.ELIMINAR).setCellRenderer(new GestionCeldasVentas("icono"));
 
@@ -401,6 +404,7 @@ public class PanelConsultaVentas extends JPanel
         tabla.getColumnModel().getColumn(UtilidadesVentas.MONTO_TOTAL).setPreferredWidth(150);
         tabla.getColumnModel().getColumn(UtilidadesVentas.IGV).setPreferredWidth(130);
         tabla.getColumnModel().getColumn(UtilidadesVentas.MONTO_NETO).setPreferredWidth(150);
+        tabla.getColumnModel().getColumn(UtilidadesVentas.ESTADO).setPreferredWidth(150);
         tabla.getColumnModel().getColumn(UtilidadesVentas.DETALLE_VENTA).setPreferredWidth(100);
         tabla.getColumnModel().getColumn(UtilidadesVentas.ELIMINAR).setPreferredWidth(30);
 
